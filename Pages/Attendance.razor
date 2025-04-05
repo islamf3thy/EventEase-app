@@ -1,0 +1,19 @@
+@page "/attendance"
+
+@code {
+    private List<string> Attendees = new();
+
+    private void RegisterAttendance(string   user = "Unknown") {
+        if (!string.IsNullOrEmpty(user)) {
+            Attendees.Add(user);
+        }
+    }
+}
+
+<h2>Attendance Tracker</h2>
+
+@foreach (var attendee in Attendees) {
+    <p>@attendee</p>
+}
+
+<button @onclick="() => RegisterAttendance() " >Mark Attendance</button>

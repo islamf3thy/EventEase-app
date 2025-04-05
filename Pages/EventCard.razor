@@ -1,0 +1,35 @@
+@page "/eventcard"
+
+@code {
+    public class Event {
+        public string Name { get; set; } = "";
+        public DateTime Date { get; set; } = DateTime.Today;
+        public string Location { get; set; } = "";
+    }
+
+    private Event myEvent = new Event();
+
+    private string? ErrorMessage;
+
+    private void ValidateData() {
+        if (string.IsNullOrWhiteSpace(myEvent.Name) || string.IsNullOrWhiteSpace(myEvent.Location)) {
+            ErrorMessage = "Event Name and Location cannot be empty!";
+        } else {
+            ErrorMessage = "";
+        }
+    }
+}
+
+<div class="event-card">
+    <h2>@myEvent.Name</h2>
+    <p><strong>Date:</strong> @myEvent.Date.ToString("MMMM dd, yyyy")</p>
+    <p><strong>Location:</strong> @myEvent.Location</p>
+
+    <label>Event Name: <input @bind="myEvent.Name" @bind:event="ValidateData" /></label>
+    <label>Event Date: <input type="date" @bind="myEvent.Date" /></label>
+    <label>Location: <input @bind="myEvent.Location" @bind:event="ValidateData" /></label>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage)) {
+        <p class="error">@ErrorMessage</p>
+    }
+</div>

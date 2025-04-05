@@ -1,0 +1,29 @@
+@page "/register"
+
+@code {
+    private string Name { get; set; } = "";
+    private string Email { get; set; } = "";
+    private string ErrorMessage;
+
+    private void ValidateAndSubmit() {
+        if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Email)) {
+            ErrorMessage = "Name and Email are required!";
+        } else if (!Email.Contains("@")) {
+            ErrorMessage = "Please enter a valid email address.";
+        } else {
+            ErrorMessage = "";
+            Console.WriteLine($"Registered: {Name}, {Email}");
+        }
+    }
+}
+
+<h2>Event Registration</h2>
+<form>
+    <label>Name: <input @bind="Name" /></label><br>
+    <label>Email: <input @bind="Email" /></label><br>
+    <button @onclick="ValidateAndSubmit">Register</button>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage)) {
+        <p class="error">@ErrorMessage</p>
+    }
+</form>

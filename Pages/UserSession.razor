@@ -1,0 +1,13 @@
+@code {
+    private string UserName;
+
+    private void Login(string name) {
+        UserName = name;
+    }
+}
+
+@if (!string.IsNullOrEmpty(UserName)) {
+    <p>Welcome, @UserName!</p>
+} else {
+    <p>Please log in to continue.</p>
+}

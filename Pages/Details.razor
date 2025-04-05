@@ -1,0 +1,40 @@
+
+ @page "/events"
+
+@code {
+     
+    public class Event {
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public string Location { get; set; }
+        public string Description { get; set; }
+    }
+    private List<Event> Events = new();
+    private int PageSize = 5;
+    private int CurrentPage = 0;
+
+    private List<Event> GetPagedEvents() {
+        return Events.Skip(CurrentPage * PageSize).Take(PageSize).ToList();
+    }
+
+    private void NextPage() {
+        if ((CurrentPage + 1) * PageSize < Events.Count) CurrentPage++;
+    }
+
+    private void PreviousPage() {
+        if (CurrentPage > 0) CurrentPage--;
+    }
+}
+
+<h2>Event List</h2>
+
+@foreach (var ev in GetPagedEvents()) {
+    <div class="event-card">
+        <h3>@ev.Name</h3>
+        <p>Date: @ev.Date.ToString("MMMM dd, yyyy")</p>
+        <p>Location: @ev.Location</p>
+    </div>
+}
+
+<button @onclick="PreviousPage">Previous</button>
+<button @onclick="NextPage">Next</button>
